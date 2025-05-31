@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IPCalc", "IPCalc\IPCalc.vcxproj", "{B264563E-9FD8-4BBE-BF5A-EDA40F835DA2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinSockServer", "WinSockServer\WinSockServer.vcxproj", "{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{B264563E-9FD8-4BBE-BF5A-EDA40F835DA2}.Release|x64.Build.0 = Release|x64
 		{B264563E-9FD8-4BBE-BF5A-EDA40F835DA2}.Release|x86.ActiveCfg = Release|Win32
 		{B264563E-9FD8-4BBE-BF5A-EDA40F835DA2}.Release|x86.Build.0 = Release|Win32
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Debug|x64.ActiveCfg = Debug|x64
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Debug|x64.Build.0 = Debug|x64
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Debug|x86.ActiveCfg = Debug|Win32
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Debug|x86.Build.0 = Debug|Win32
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Release|x64.ActiveCfg = Release|x64
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Release|x64.Build.0 = Release|x64
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Release|x86.ActiveCfg = Release|Win32
+		{C6436CAF-B0B6-4A99-84F2-46AAD22FD7CA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
