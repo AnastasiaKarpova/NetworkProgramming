@@ -113,10 +113,11 @@ VOID SetIPPrefix(HWND hwnd)
 	DWORD dwIPmask = 0;
 	SendMessage(hIPmask, IPM_GETADDRESS, 0, (LPARAM)&dwIPmask);
 	DWORD count = 0;
-	for (DWORD i = dwIPmask, 0x80000000 & i; i <<= 1, count++);
+	for (DWORD i = dwIPmask; 0x80000000 & i; i <<= 1, count++);
 	CHAR szIPprefix[3] = "";
 	sprintf(szIPprefix, "%i", count);
 	SendMessage(hIPprefix, WM_SETTEXT, 0, (LPARAM)szIPprefix);
+	
 }
 VOID PrintInfo(HWND hwnd)
 {
