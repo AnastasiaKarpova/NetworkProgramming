@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS 
+п»ї#define _CRT_SECURE_NO_WARNINGS 
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN 
 #endif // !WIN32_LEAN_AND_MEAN
@@ -18,7 +18,7 @@ using namespace std;
 void main()
 {
 	setlocale(LC_ALL, "");
-	//1) Инициализация WinSock:
+	//1) РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ WinSock:
 	WSAData wsaData;
 
 	int iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
@@ -28,8 +28,8 @@ void main()
 		return;
 	}
 
-	//2) ??????Получаем IP-адреса, на которых можно запусть сокет:
-	//2) Проверяем, не занят ли порт
+	//2) ??????РџРѕР»СѓС‡Р°РµРј IP-Р°РґСЂРµСЃР°, РЅР° РєРѕС‚РѕСЂС‹С… РјРѕР¶РЅРѕ Р·Р°РїСѓСЃС‚СЊ СЃРѕРєРµС‚:
+	//2) РџСЂРѕРІРµСЂСЏРµРј, РЅРµ Р·Р°РЅСЏС‚ Р»Рё РїРѕСЂС‚
 	addrinfo hints;
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_INET; // TCP/IPv4
@@ -47,7 +47,7 @@ void main()
 	}
 	cout << hints.ai_addr << endl;
 
-	//3) Создаем сокет, который будет прослушивать сервер:
+	//3) РЎРѕР·РґР°РµРј СЃРѕРєРµС‚, РєРѕС‚РѕСЂС‹Р№ Р±СѓРґРµС‚ РїСЂРѕСЃР»СѓС€РёРІР°С‚СЊ СЃРµСЂРІРµСЂ:
 	SOCKET ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	
 	if (ListenSocket == INVALID_SOCKET)
@@ -58,7 +58,7 @@ void main()
 		return;
 	}
 
-	//4) Связываем сокет с сетевой картой, которую он будет прослушивать:
+	//4) РЎРІСЏР·С‹РІР°РµРј СЃРѕРєРµС‚ СЃ СЃРµС‚РµРІРѕР№ РєР°СЂС‚РѕР№, РєРѕС‚РѕСЂСѓСЋ РѕРЅ Р±СѓРґРµС‚ РїСЂРѕСЃР»СѓС€РёРІР°С‚СЊ:
 	//strcpy(result->ai_addr->sa_data = "127.0.0.1");
 	iResult = bind(ListenSocket, result-> ai_addr, result->ai_addrlen);
 	if (iResult == SOCKET_ERROR)
@@ -70,7 +70,7 @@ void main()
 		return;
 	}
 
-	//5) Запускаем сокет:
+	//5) Р—Р°РїСѓСЃРєР°РµРј СЃРѕРєРµС‚:
 	iResult = listen(ListenSocket, SOMAXCONN);
 	if (iResult == SOCKET_ERROR)
 	{
@@ -81,10 +81,35 @@ void main()
 		return;
 	}
 
-	//6) Зацикливаем сокет на получение соединений от клиентов
+	
+	VOID WINAPI HandleClient(SOCKET ClientSocket);
+	CONST INT MAX_CLIENTS = 5;
+	SOCKET clients[MAX_CLIENTS] = {};
+	DWORD dw_threadIDs[MAX_CLIENTS] = {};
+	HANDLE hThreads[MAX_CLIENTS] = {};
+	INT i = 0;
+
+	while (i < 5)
+	{
+		SOCKET ClientSocket = accept(ListenSocket, NULL, NULL);
+		//HandleClient(ClientSocket);
+		clients[i++] = ClientSocket;
+		hThreads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)HandleClient, &clients[i], 0, &dw_threadIDs[i]);
+		i++;
+		
+	}
+
+	closesocket(ListenSocket);
+	freeaddrinfo(result);
+	WSACleanup();
+}
+
+VOID HandleClient(SOCKET ClientSocket)
+{
+	INT iResult = 0;
+	//6) Р—Р°С†РёРєР»РёРІР°РµРј СЃРѕРєРµС‚ РЅР° РїРѕР»СѓС‡РµРЅРёРµ СЃРѕРµРґРёРЅРµРЅРёР№ РѕС‚ РєР»РёРµРЅС‚РѕРІ
 	CHAR recvbuffer[DEFAULT_BUFFER_LENGTH] = {};
 	int recv_buffer_length = DEFAULT_BUFFER_LENGTH;
-	SOCKET ClientSocket = accept(ListenSocket, NULL, NULL);
 	do
 	{
 		ZeroMemory(recvbuffer, sizeof(recvbuffer));
@@ -100,10 +125,10 @@ void main()
 			{
 				cout << "Error: Send faild with code: " << WSAGetLastError() << endl;
 				closesocket(ClientSocket);
-				closesocket(ListenSocket);
-				freeaddrinfo(result);
-				WSACleanup();
-				return;
+				//closesocket(ListenSocket);
+				//freeaddrinfo(result);
+				//WSACleanup();
+				//return;
 			}
 			cout << "Bytes sent: " << iSendResult << endl;
 		}
@@ -122,12 +147,4 @@ void main()
 			//return;
 		}
 	} while (iResult > 0);
-	closesocket(ListenSocket);
-	freeaddrinfo(result);
-	WSACleanup();
 }
-
-//VOID HandleClient(SOCKET ClientSocket, )
-//{
-//
-//}

@@ -1,4 +1,4 @@
-
+п»ї
 #ifndef WIN32_LEAN_AND_MEAN 
 #define WIN32_LEAN_AND_MEAN 
 #endif // !WIN32_LEAN_AND_MEAN 
@@ -20,7 +20,7 @@ using namespace std;
 void main()
 {
 	setlocale(LC_ALL, "");
-	//1) Инициализируем WinSock
+	//1) РРЅРёС†РёР°Р»РёР·РёСЂСѓРµРј WinSock
 	WSAData wsaData;
 	INT iResult = WSAStartup(MAKEWORD(2, 2), &wsaData);
 
@@ -30,7 +30,7 @@ void main()
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_protocol = IPPROTO_TCP;
 
-	//2) Выполняем разрешение имен:
+	//2) Р’С‹РїРѕР»РЅСЏРµРј СЂР°Р·СЂРµС€РµРЅРёРµ РёРјРµРЅ:
 	addrinfo* result = NULL;
 	iResult = getaddrinfo("127.0.0.1", DEFAULT_PORT, &hints, &result);
 	if (iResult != 0)
@@ -40,7 +40,7 @@ void main()
 		return;
 	}
 
-	//3) Создаем сокет для подключения к серверу:
+	//3) РЎРѕР·РґР°РµРј СЃРѕРєРµС‚ РґР»СЏ РїРѕРґРєР»СЋС‡РµРЅРёСЏ Рє СЃРµСЂРІРµСЂСѓ:
 	SOCKET connect_socket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 	if (connect_socket == INVALID_SOCKET)
 	{
@@ -50,7 +50,7 @@ void main()
 		return;
 	}
 
-	//4) Подключаемся к серверу:
+	//4) РџРѕРґРєР»СЋС‡Р°РµРјСЃСЏ Рє СЃРµСЂРІРµСЂСѓ:
 	iResult = connect(connect_socket, result->ai_addr, result->ai_addrlen);
 	if (iResult == SOCKET_ERROR)
 	{
@@ -61,7 +61,7 @@ void main()
 		return;
 	}
 
-	//5) Получение и отправка данных:
+	//5) РџРѕР»СѓС‡РµРЅРёРµ Рё РѕС‚РїСЂР°РІРєР° РґР°РЅРЅС‹С…:
 	//int recbuflen = DEFAULT_BUFFER_LENGTH;
 	CHAR send_buffer[DEFAULT_BUFFER_LENGTH] = "Hello Server, I am Client";
 	CHAR recvbuffer[DEFAULT_BUFFER_LENGTH]{};
@@ -98,7 +98,7 @@ void main()
 		else cout << "Receive failed with code: " << WSAGetLastError() << endl;
 		ZeroMemory(send_buffer, sizeof(send_buffer));
 		ZeroMemory(recvbuffer, sizeof(recvbuffer));
-		cout << "Введите сообщение: "; 
+		cout << "Р’РІРµРґРёС‚Рµ СЃРѕРѕР±С‰РµРЅРёРµ: "; 
 		SetConsoleCP(1251);
 		cin.getline(send_buffer, DEFAULT_BUFFER_LENGTH);
 		SetConsoleCP(866);
