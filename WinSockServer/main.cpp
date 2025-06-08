@@ -109,16 +109,25 @@ void main()
 		}
 		else if (iResult == 0)
 		{
-			cout << "Connection closing" << endl;
+			cout << "Connection closing..." << endl;
+			closesocket(ClientSocket);
 		}
 		else
 		{
 			cout << "Error: recv() faild with code " << WSAGetLastError() << endl;
 			closesocket(ClientSocket);
-			closesocket(ListenSocket);
+			/*closesocket(ListenSocket);
 			freeaddrinfo(result);
-			WSACleanup();
-			return;
+			WSACleanup();*/
+			//return;
 		}
 	} while (iResult > 0);
+	closesocket(ListenSocket);
+	freeaddrinfo(result);
+	WSACleanup();
 }
+
+//VOID HandleClient(SOCKET ClientSocket, )
+//{
+//
+//}

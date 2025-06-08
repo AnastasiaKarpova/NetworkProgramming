@@ -79,6 +79,7 @@ void main()
 		}
 		cout << iResult << " Bytes sent" << endl;
 
+
 		//iResult = shutdown(connect_socket, SD_SEND);
 		/*if (iResult == SOCKET_ERROR)
 		{
@@ -97,8 +98,12 @@ void main()
 		else cout << "Receive failed with code: " << WSAGetLastError() << endl;
 		ZeroMemory(send_buffer, sizeof(send_buffer));
 		ZeroMemory(recvbuffer, sizeof(recvbuffer));
-		cout << "¬ведите сообщение: "; cin.getline(send_buffer,DEFAULT_BUFFER_LENGTH);
-	} while (iResult > 0);
+		cout << "¬ведите сообщение: "; 
+		SetConsoleCP(1251);
+		cin.getline(send_buffer, DEFAULT_BUFFER_LENGTH);
+		SetConsoleCP(866);
+		//for (int i = 0; send_buffer[i]; i++)send_buffer[i] = tolower(send_buffer[i]);
+	} while (iResult > 0 && strcmp(send_buffer,"exit"));
 
 	//7) Disconnect:
 	iResult = shutdown(connect_socket, SD_SEND);
