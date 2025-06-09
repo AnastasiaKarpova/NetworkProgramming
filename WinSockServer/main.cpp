@@ -14,7 +14,7 @@ using namespace std;
 
 #define DEFAULT_PORT			"27015"
 #define DEFAULT_BUFFER_LENGTH	1500
-
+#define SZ_SORRY "Sorry, but all is busy"
 
 void main()
 {
@@ -30,7 +30,7 @@ void main()
 	}
 
 	//2) ??????Получаем IP-адреса, на которых можно запусть сокет:
-	//2) Проверяем, не занят ли порт
+	//2) Проверяем, не занят ли порт, на котором мы хотим запустить свой Сервер:
 	addrinfo hints;
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_INET; // TCP/IPv4
@@ -108,7 +108,7 @@ void main()
 			{
 				cout << "Bytes received: " << iResult << endl;
 				cout << "Message: " << receive_buffer << endl;
-				CHAR SZ_SORRY[] = "Sorry, but all is busy";
+				//CHAR SZ_SORRY[] = "Sorry, but all is busy";
 				INT iSendResult = send(ClientSocket, SZ_SORRY, strlen(SZ_SORRY), 0);
 				closesocket(ClientSocket);
 			}
