@@ -85,7 +85,7 @@ void main()
 	VOID WINAPI HandleClient(SOCKET ClientSocket);
 	CONST INT MAX_CLIENTS = 5;
 	SOCKET clients[MAX_CLIENTS] = {};
-	DWORD dw_threadIDs[MAX_CLIENTS] = {};
+	DWORD dwThreadIDs[MAX_CLIENTS] = {};
 	HANDLE hThreads[MAX_CLIENTS] = {};
 	INT i = 0;
 
@@ -93,8 +93,8 @@ void main()
 	{
 		SOCKET ClientSocket = accept(ListenSocket, NULL, NULL);
 		//HandleClient(ClientSocket);
-		clients[i++] = ClientSocket;
-		hThreads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)HandleClient, &clients[i], 0, &dw_threadIDs[i]);
+		clients[i] = ClientSocket;
+		hThreads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)HandleClient, (LPVOID)clients[i], 0, &dwThreadIDs[i]);
 		i++;
 		
 	}
