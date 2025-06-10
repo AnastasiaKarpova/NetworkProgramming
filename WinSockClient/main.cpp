@@ -137,7 +137,7 @@ VOID Send(SOCKET connect_socket, addrinfo* result)
 	cout << "Your nickname please: ";
 	CHAR sz_nickname[32]{};
 	cin.getline(sz_nickname, 32);
-	CHAR send_buffer[DEFAULT_BUFFER_LENGTH] = "Hello Server, I am Client";
+	CHAR send_buffer[DEFAULT_BUFFER_LENGTH] = "Hello Server, I am ";
 	strcat(send_buffer, sz_nickname);
 	do
 	{
