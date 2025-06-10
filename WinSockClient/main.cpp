@@ -121,6 +121,8 @@ void main()
 
 	Send(connect_socket, result);
 	g_connected = FALSE;
+	cout << g_connected << endl;
+
 	//TODO: Sync threads
 	
 	//7) Disconnect:
@@ -185,10 +187,21 @@ VOID Receive(SOCKET connect_socket, addrinfo* result)
 
 		iResult = recv(connect_socket, recvbuffer, DEFAULT_BUFFER_LENGTH, 0);
 		if (iResult > 0)cout << "Bytes received: " << iResult << ", Message: " << recvbuffer << endl;
-		else if (iResult == 0)cout << "Connection closed" << endl;
-		else cout << "Receive failed with code: " << WSAGetLastError() << endl;
+		else if (iResult == 0)
+		{
+			cout << "Connection closed" << endl;
+			break;
+		}
+		else 
+		{
+			cout << "Receive failed with code: " << WSAGetLastError() << endl;
+			break;
+		}
+		
 		if (strcmp(recvbuffer, SZ_SORRY) == 0)break;
+		
 		ZeroMemory(recvbuffer, sizeof(recvbuffer));
 		
 	} while (g_connected);
+	cout << "Receive closing" << endl;
 }
